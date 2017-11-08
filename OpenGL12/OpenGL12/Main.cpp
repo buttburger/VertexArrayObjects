@@ -18,17 +18,8 @@ int refreshMS = 15;
 
 GLuint  prog_hdlr, program;
 GLint location_attribute_0, location_viewport;
-
 const int SCREEN_WIDTH  = 800, SCREEN_HEIGHT = 600;
-
 const float light0_position[4] = {1,1,1,0};
-
-static const GLfloat f[] =
-{
-	-0.5f, -0.5f, 0.0f,
-	0.5f, -0.5f, 0.0f,
-	0.0f, 0.5f, 0.0f
-};
 
 void display()
 {
@@ -36,11 +27,9 @@ void display()
 	glLoadIdentity();
 
 	glUseProgram(prog_hdlr);
+	
 	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, program);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
-
 	glDisableVertexAttribArray(0);
 
 	glutSwapBuffers();
@@ -127,8 +116,8 @@ int main(int argc, char**argv)
 	glEnable(GL_LIGHT0);
 	glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
 
-	//glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	
 	glewInit();
 	if(GLEW_ARB_vertex_shader && GLEW_ARB_fragment_shader && GL_EXT_geometry_shader4)
@@ -140,7 +129,14 @@ int main(int argc, char**argv)
 		//
 		glGenBuffers(1, &program);
 		glBindBuffer(GL_ARRAY_BUFFER, program);
+		static const GLfloat f[] =
+		{
+			-0.5f, -0.5f, 0.0f,
+			0.5f, -0.5f, 0.0f,
+			0.0f, 0.5f, 0.0f
+		};
 		glBufferData(GL_ARRAY_BUFFER, sizeof(f), f, GL_STATIC_DRAW);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	}
 	else
 	{
