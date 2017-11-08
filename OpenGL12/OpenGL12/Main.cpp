@@ -28,9 +28,9 @@ void display()
 
 	glUseProgram(prog_hdlr);
 	
-	glEnableVertexAttribArray(0);
+	//glEnableVertexAttribArray(0);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
-	glDisableVertexAttribArray(0);
+	//glDisableVertexAttribArray(0);
 
 	glutSwapBuffers();
 }
@@ -118,15 +118,18 @@ void initGL()
 		location_attribute_0 = glGetAttribLocation(prog_hdlr, "R"); //radius
 		location_viewport = glGetUniformLocation(prog_hdlr, "viewport"); //viewport
 		//
-		glGenBuffers(1, &program);
-		glBindBuffer(GL_ARRAY_BUFFER, program);
 		static const GLfloat f[] =
 		{
 			-0.5f, -0.5f, 0.0f,
 			0.5f, -0.5f, 0.0f,
 			0.0f, 0.5f, 0.0f
 		};
+		//
+		glGenBuffers(1, &program);
+		glBindBuffer(GL_ARRAY_BUFFER, program);
+		//
 		glBufferData(GL_ARRAY_BUFFER, sizeof(f), f, GL_STATIC_DRAW);
+		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	}
 	else
