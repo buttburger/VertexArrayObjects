@@ -97,18 +97,9 @@ void timer(int value)
 	glutPostRedisplay(); //Post re-paint request to activate display()
 	glutTimerFunc(refreshMS, timer, 0); //next timer call milliseconds later
 }
-int main(int argc, char**argv)
+
+void initGL()
 {
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_RGB|GLUT_DEPTH|GLUT_DOUBLE);
-	glutInitWindowPosition(0, 0);
-	glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-	glutCreateWindow("GLSL tutorial");
-	glutDisplayFunc(display);
-	glutReshapeFunc(reshape);
-	glutKeyboardFunc(process_keys);
-	//glutIdleFunc(display);
-	
 	glClearColor(0.7f, 0.7f, 0.3f, 1.0f);
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_DEPTH_TEST);
@@ -142,6 +133,20 @@ int main(int argc, char**argv)
 	{
 		printf("No GLSL support\n");
 	}
+}
+
+int main(int argc, char**argv)
+{
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_RGB|GLUT_DEPTH|GLUT_DOUBLE);
+	glutInitWindowPosition(0, 0);
+	glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	glutCreateWindow("GLSL tutorial");
+	glutDisplayFunc(display);
+	glutReshapeFunc(reshape);
+	glutKeyboardFunc(process_keys);
+	//glutIdleFunc(display);
+	initGL();
 	glutTimerFunc(0, timer, 0);
 	glutMainLoop();
 	return 0;
